@@ -59,7 +59,7 @@
     return [constraints copy];
 }
 
--(NSArray*)pinToSuperviewEdgesWithInset:(UIEdgeInsets)insets
+-(NSArray*)pinToSuperviewEdgesWithInsets:(UIEdgeInsets)insets
 {
     UIView *superview = self.superview;
     NSAssert(superview,@"Can't pin to a superview if no superview exists");
@@ -88,6 +88,14 @@
     NSAssert (toEdge >= NSLayoutAttributeLeft && toEdge <= NSLayoutAttributeBottom,@"Edge parameter is not an edge");
     
     [superview addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:edge relatedBy:NSLayoutRelationEqual toItem:peerView attribute:toEdge multiplier:1.0 constant:inset]];
+}
+
+-(void)pinToEdgesOfView:(UIView*)view insets:(UIEdgeInsets)insets;
+{
+    [self pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeTop ofView:view inset:insets.top];
+    [self pinEdge:NSLayoutAttributeLeft toEdge:NSLayoutAttributeLeft ofView:view inset:insets.left];
+    [self pinEdge:NSLayoutAttributeBottom toEdge:NSLayoutAttributeBottom ofView:view inset:insets.bottom];
+    [self pinEdge:NSLayoutAttributeRight toEdge:NSLayoutAttributeRight ofView:view inset:insets.right];
 }
 
 -(void)constrainToSize:(CGSize)size
